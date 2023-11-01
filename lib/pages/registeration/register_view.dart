@@ -39,41 +39,7 @@ class _RegisterViewState extends State<RegisterView> {
             fit: BoxFit.cover),
       ),
       child: Scaffold(
-        // resizeToAvoidBottomInset: false,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        // floatingActionButton: MaterialButton(
-        //   onPressed: () {
-        //     // need to validate data
-        //
-        //     if(globalKey.currentState!.validate()) {
-        //       // registe new account
-        //
-        //     }
-        //   },
-        //   padding: EdgeInsets.zero,
-        //   child: Container(
-        //     padding: EdgeInsets.symmetric(horizontal: 20),
-        //     height: 50,
-        //     decoration: BoxDecoration(
-        //       color: theme.primaryColor,
-        //       borderRadius: BorderRadius.circular(8.0),
-        //     ),
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       children: [
-        //         Text(
-        //           "Regsiter",
-        //           style: theme.textTheme.bodyLarge!
-        //               .copyWith(color: Colors.white),
-        //         ),
-        //         Icon(
-        //           Icons.arrow_forward,
-        //           color: Colors.white,
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ).setVerticalPadding(context, 0.06),
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -199,7 +165,6 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                     ),
                   ).setVerticalPadding(context, 0.06),
-                  // ElevatedButton(onPressed: () {}, child: Text(""))
                 ],
               ),
             ),
@@ -209,56 +174,7 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
-  login() async {
-    try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: "hossam@gmail.com",
-        password: "Asdf1234@",
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-    }
-  }
-
-  void register() async {
-    if (globalKey.currentState!.validate()) {
-      // registe new account
-      EasyLoading.show();
-
-      print(emailController.text);
-      print(passwordController.text);
-      try {
-        var userCredential =
-            await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-        );
-
-        EasyLoading.dismiss();
-        SnackBarService.showSuccessMessage("Your account has been registered");
-        Navigator.pop(context);
-        print(userCredential.user?.uid);
-
-        // userCredential.user.ui
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'weak-password') {
-          EasyLoading.dismiss();
-          SnackBarService.showErrorMessage(
-              'The password provided is too weak.');
-          print('The password provided is too weak.');
-        } else if (e.code == 'email-already-in-use') {
-          EasyLoading.dismiss();
-          SnackBarService.showErrorMessage(
-              'The account already exists for that email.');
-          print('The account already exists for that email.');
-        }
-      } catch (e) {
-        print(e);
-      }
-    }
+  void register() {
+    Navigator.pop(context);
   }
 }

@@ -159,31 +159,7 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  login() async {
-    if (formKey.currentState!.validate()) {
-      EasyLoading.show();
-      try {
-        final credential =
-            await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-        );
-        EasyLoading.dismiss();
-
-        SnackBarService.showSuccessMessage("Your Successfully signed in");
-        Navigator.pushReplacementNamed(context, HomeLayout.routeName);
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'user-not-found') {
-          EasyLoading.dismiss();
-          SnackBarService.showErrorMessage('No user found for that email.');
-          print('No user found for that email.');
-        } else if (e.code == 'wrong-password') {
-          EasyLoading.dismiss();
-          SnackBarService.showErrorMessage(
-              'Wrong password provided for that user.');
-          print('Wrong password provided for that user.');
-        }
-      }
-    }
+  login() {
+    Navigator.pushReplacementNamed(context, HomeLayout.routeName);
   }
 }
